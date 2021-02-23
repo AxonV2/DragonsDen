@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="angularCart">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{{title}}</title>
+    <link rel="icon" type="image/png" href="img/dragon.png">
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+                <!-- Imports -->
+    <!-- jQuery, SweetAlerts, BootStrap, AngularJS -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/imagesloaded.pkgd.min.js"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-animate.js"></script>
+    <!-- Backstrech -->
+    <script src="js/jquery.backstretch.min.js"></script> 
+
+    <!-- Bootstrap 
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Scripts Angular e jQuery, JavaScript incluída em baixo -->
+    <script src="scripts/angular.js"></script>
+    <script src="scripts/jquery.js"></script>
+</head>
+
+<body>
+<header class="header-area">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="logo text-center"> <a href="index.html"> <img src="img/dragon.png"></a> </div>
+                <h2 id="title" href="#">Dragon's Den</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="nav">
+                    <li><a class="active" href="index.html">Store</a></li>
+                    <li><a href="cart.html">Cart</a></li>        
+                </ul>
+            </div> 
+        </div>
+    </div>
+</header>
+
+    <section class="itemArea" ng-controller="itemController">
+        <div class="container">
+
+            <!-- UP & DOWN Shortcuts -->
+            <button id="goUp" class="btn btn-primary"> <i class="fa fa-angle-double-up"></i> </button>
+            <button id="goDown" class="btn btn-primary"> <i class="fa fa-angle-double-down"></i> </button>
+        
+            <div class="row">
+               <div class="col-md-12 col-sm-12 col-xs-12">
+                   <div class="search_form">
+
+                       <input id="searchInput" type="text" class="form-control text-center" placeholder="--Insert product/keyword/category name here--" ng-model="search">
+                        
+                       <!-- Smaller search bar for phone screens -->
+                       <input id="searchFilterSmall" type="text" class="form-control text-center" placeholder="Search" ng-model="search">
+                    
+                    </div>
+               </div>
+    
+               <ul class="gallery-filter">
+                    <li ng-repeat="cat in itemCategories"> 
+                        <a role="button" class="cats" ng-click="filterBy(cat)" href="#">{{cat}}</a>
+                    </li>
+                </ul>
+
+                <h2 id="categoryMT"> We're sorry! This category has no items yet, please check later!</h2>
+                <h2 id="searchMT"> No items matching your search were found.</h2>
+
+                <div class="itemCount">
+                    <div class="col-md-4 col-sm-4 col-md-offset-0 col-sm-offset-0 col-xs-offset-2 col-xs-8 repeatItem" ng-repeat="itemRep in itemList | filter:search">
+                        <div class="item">
+                            <img src="img/{{itemRep.img}}">
+                            <h2>{{itemRep.name}}</h2> 
+                            <!-- Collapse call differentiated by ID -->
+                            <div class="collapse details{{itemRep.id}}">
+                                <p>{{itemRep.desc}}<br>
+                                <strong>Color:</strong> {{itemRep.color}}<br> 
+                                <strong>Size:</strong> {{itemRep.size}}<br>
+                                <strong>Status:</strong> {{itemRep.status}}<br>
+                                <strong>Price:</strong> ${{itemRep.price}}</p>
+                                <!-- Extra collapse -->
+                                <a class="innerCollapse" data-toggle="collapse" data-target=".details{{itemRep.id}}"> Close </a>
+                            </div>
+                            <a data-toggle="collapse" data-target=".details{{itemRep.id}}" >Item Details</a>
+                            <a ng-click="addToCart(itemRep)">Add to Cart</a>
+                        </div>
+                    </div> 
+                </div>
+
+                <div class="pagination">
+                    <div class="prev">Prev</div>
+                    <div class="page">Page <span class="pageNum"></span></div>
+                    <div class="next">Next</div>
+                </div>
+            </div>
+        </div>
+    </section>   
+
+     <!-- Footer -->
+     <footer>
+        <div class="footer-top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 col-lg-4 footer-about">
+                        <div class="footer-logo"> <a href="index.html"> <img src="img/dragon.png"></a> </div>
+                        <p>https://github.com/AxonV2</p>
+                    </div>
+
+                    <div class="col-md-5 col-lg-5 footer-contact">
+                        <h3>Contacts</h3>
+                        <p><i class="fa fa-map-marker"></i>Github, XXXX-XXX Portugal</p>
+                        <p><i class="fa fa-phone"></i> Phone: XXX-XXX-XXX </p>
+                        <p><i class="fa fa-envelope"></i> Email: <a href="mailto:metalwolf.avi@gmail.com">metalwolf.avi@gmail.com</a></p>
+                      </div>
+
+                    <div class="col-md-4 col-lg-3 footer-links">
+                        <div class="row">
+                            <div class="col">
+                                <h3>Links</h3>
+                                <a href="#"><i class="fa fa-facebook fa-4x"></i></a> 
+                                <a href="#"><i class="fa fa-twitter fa-4x"></i></a> 
+                                <a href="#"><i class="fa fa-google-plus fa-4x"></i></a> 
+                                <a href="#"><i class="fa fa-instagram fa-4x"></i></a> 
+                                <a href="#"><i class="fa fa-pinterest fa-4x"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+        </div>
+    </footer>
+
+    <!-- Script JavaScript -->
+    <script src="scripts/javascript.js"></script>
+</body>
+</html>
