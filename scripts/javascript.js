@@ -31,8 +31,7 @@
 				items[i].classList.remove("hide");
 				items[i].classList.add("show");
 			}
-			
-			//Num pagina
+
 			page.innerHTML=pageNumber;
 		}	 	
 	}
@@ -108,7 +107,7 @@
 
 		})
 
-		//Adicionar event listener a todos filtros de categorias
+		//Add event listener to each category button 
 		for(let i = 0; i < showAllClick.length; i++)
 		{
 			showAllClick[i].addEventListener("click", function() { pageItemReset(); })
